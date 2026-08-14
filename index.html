@@ -4,284 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tsound</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-}
-
-/* =========================
-   INTRO / SPLASH SCREEN
-========================= */
-
-#intro {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-
-    background: #000;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-#intro.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* GIF */
-
-#intro img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Skip Button */
-
-#skipBtn {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-
-    background: rgba(255,255,255,0.15);
-    color: white;
-
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 30px;
-
-    padding: 10px 20px;
-
-    cursor: pointer;
-
-    font-size: 14px;
-
-    backdrop-filter: blur(5px);
-
-    transition: 0.3s;
-}
-
-#skipBtn:hover {
-    background: rgba(255,255,255,0.3);
-}
-
-/* =========================
-   MAIN WEBSITE
-========================= */
-
-header {
-    padding: 30px 20px;
-    text-align: center;
-    background: #181818;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 36px;
-}
-
-header p {
-    color: #aaa;
-}
-
-nav {
-    text-align: center;
-    padding: 15px;
-    background: #222;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 25px;
-}
-
-.post {
-    background: #1d1d1d;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-}
-
-.post h2 {
-    margin-top: 0;
-}
-
-.button {
-    display: inline-block;
-    background: #ff5500;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-}
-
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #777;
-}
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    header h1 {
-        font-size: 30px;
-    }
-
-    nav a {
-        margin: 0 5px;
-        font-size: 14px;
-    }
-
-    .container {
-        padding: 15px;
-    }
-
-    #skipBtn {
-        top: 15px;
-        left: 15px;
-        padding: 8px 15px;
-    }
-}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#111;color:#fff}
+#intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:.7s}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+#intro video{width:100%;height:100%;object-fit:cover}
+#tap-area{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34vw;height:18vw;max-width:300px;max-height:160px;min-width:180px;min-height:100px;background:transparent;border:0;cursor:pointer}
+header{padding:30px 20px;text-align:center;background:#181818}header h1{margin:0;font-size:36px}header p{color:#aaa}
+nav{text-align:center;padding:15px;background:#222}nav a{color:#fff;text-decoration:none;margin:0 10px}
+.container{max-width:900px;margin:auto;padding:25px}.post{background:#1d1d1d;padding:20px;margin-bottom:20px;border-radius:15px}.post h2{margin-top:0}
+.button{display:inline-block;background:#ff5500;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none}
+footer{text-align:center;padding:30px;color:#777}
+#chat-button{position:fixed;right:20px;bottom:20px;width:60px;height:60px;border:0;border-radius:50%;background:#ff5500;color:#fff;font-size:26px;cursor:pointer;z-index:5000;box-shadow:0 8px 25px #0008}
+#chat-window{position:fixed;right:20px;bottom:90px;width:min(360px,calc(100vw - 30px));height:500px;background:#181818;border:1px solid #333;border-radius:18px;overflow:hidden;z-index:4999;display:none;box-shadow:0 15px 40px #0009}
+#chat-window.open{display:flex;flex-direction:column}
+.chat-head{padding:15px;background:#222;display:flex;justify-content:space-between;align-items:center}
+#close-chat{background:none;border:0;color:#aaa;font-size:22px;cursor:pointer}
+#messages{flex:1;padding:12px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.msg{background:#252525;border-radius:12px;padding:8px 10px;max-width:85%;align-self:flex-start}.msg.mine{background:#ff5500;align-self:flex-end}
+.msg small{display:block;color:#aaa;font-size:10px;margin-bottom:3px}.msg.mine small{color:#ffe0d2}
+.chat-login{padding:12px;border-top:1px solid #333}
+#name,#message{padding:10px;border-radius:9px;border:1px solid #444;background:#111;color:#fff}
+#name{width:100%}.chat-form{display:flex;gap:7px;padding:10px;border-top:1px solid #333}
+#message{flex:1}#send{border:0;border-radius:9px;padding:0 15px;background:#ff5500;color:#fff;cursor:pointer}
+@media(max-width:600px){#chat-window{right:10px;bottom:80px;width:calc(100vw - 20px);height:65vh}#chat-button{right:15px;bottom:15px}}
 </style>
 </head>
-
 <body>
 
-<!-- =========================
-     INTRO
-========================= -->
-
 <div id="intro">
-
-    <!-- نام فایل GIF را اینجا قرار بده -->
-    <img src="intro.gif" alt="Tsound Intro">
-
-    <button id="skipBtn">
-        SKIP
-    </button>
-
+<video id="introVideo" autoplay muted playsinline preload="auto"><source src="intro.mp4" type="video/mp4"></video>
+<button id="tap-area" aria-label="Tap it"></button>
 </div>
 
-
-<!-- =========================
-     MAIN WEBSITE
-========================= -->
-
-<header>
-    <h1>Tsound</h1>
-    <p>وبلاگ موسیقی و هنر</p>
-</header>
-
-<nav>
-    <a href="#">خانه</a>
-    <a href="#">موسیقی</a>
-    <a href="#">نوشته‌ها</a>
-    <a href="#">درباره من</a>
-</nav>
-
+<header><h1>Tsound</h1><p>وبلاگ موسیقی و هنر</p></header>
+<nav><a href="#">خانه</a><a href="#">موسیقی</a><a href="#">نوشته‌ها</a><a href="#">درباره من</a></nav>
 <div class="container">
-
-    <div class="post">
-        <h2>به وبلاگ Tsound خوش آمدید 🎵</h2>
-
-        <p>
-            اینجا می‌توانید اخبار، آهنگ‌ها، موزیک‌ویدیوها
-            و مطالب جدید موسیقی را دنبال کنید.
-        </p>
-
-        <a class="button" href="#">
-            ادامه مطلب
-        </a>
-    </div>
-
-    <div class="post">
-        <h2>آخرین آهنگ</h2>
-
-        <p>
-            به‌زودی آهنگ‌های جدید در این قسمت قرار می‌گیرند.
-        </p>
-    </div>
-
+<div class="post"><h2>به وبلاگ Tsound خوش آمدید 🎵</h2><p>اینجا می‌توانید اخبار، آهنگ‌ها، موزیک‌ویدیوها و مطالب جدید موسیقی را دنبال کنید.</p><a class="button" href="#">ادامه مطلب</a></div>
+<div class="post"><h2>آخرین آهنگ</h2><p>به‌زودی آهنگ‌های جدید در این قسمت قرار می‌گیرند.</p></div>
 </div>
+<footer>© 2026 Tsound</footer>
 
-<footer>
-    © 2026 Tsound
-</footer>
-
+<button id="chat-button" aria-label="باز کردن چت">💬</button>
+<div id="chat-window">
+<div class="chat-head"><strong>💬 چت Tsound</strong><button id="close-chat">×</button></div>
+<div id="messages"><div class="msg"><small>Tsound</small>این نسخه فعلاً آزمایشی است 👋</div></div>
+<div class="chat-login"><input id="name" maxlength="20" placeholder="اسم شما..."></div>
+<form class="chat-form" id="chat-form"><input id="message" maxlength="300" placeholder="پیامت رو بنویس..." autocomplete="off"><button id="send" type="submit">ارسال</button></form>
+</div>
 
 <script>
+const intro=document.getElementById('intro'),video=document.getElementById('introVideo'),tap=document.getElementById('tap-area');
+function enterSite(){intro.classList.add('hide');setTimeout(()=>intro.remove(),750)}
+tap.onclick=enterSite; video.onended=enterSite;
 
-/* =========================
-   INTRO SETTINGS
-========================= */
-
-const intro = document.getElementById("intro");
-const skipBtn = document.getElementById("skipBtn");
-
-/*
-   مدت زمان نمایش Intro
-   این مقدار را بر اساس طول GIF تغییر بده.
-
-   مثال:
-   5 ثانیه  = 5000
-   8 ثانیه  = 8000
-   10 ثانیه = 10000
-*/
-
-const introDuration = 8000;
-
-
-/* ورود به سایت */
-
-function enterSite() {
-    intro.classList.add("hidden");
-
-    // بعد از محو شدن کامل، Intro از صفحه حذف شود
-    setTimeout(() => {
-        intro.style.display = "none";
-    }, 800);
-}
-
-
-/* دکمه SKIP */
-
-skipBtn.addEventListener("click", () => {
-    enterSite();
-});
-
-
-/* ورود خودکار بعد از پایان Intro */
-
-setTimeout(() => {
-    enterSite();
-}, introDuration);
-
+const cb=document.getElementById('chat-button'),cw=document.getElementById('chat-window'),cc=document.getElementById('close-chat');
+const form=document.getElementById('chat-form'),name=document.getElementById('name'),msg=document.getElementById('message'),box=document.getElementById('messages');
+name.value=localStorage.getItem('tsound_name')||'';
+cb.onclick=()=>{cw.classList.add('open');msg.focus()};cc.onclick=()=>cw.classList.remove('open');
+form.onsubmit=e=>{e.preventDefault();let n=name.value.trim(),t=msg.value.trim();if(!n){name.focus();return}if(!t)return;localStorage.setItem('tsound_name',n);
+let d=document.createElement('div'),s=document.createElement('small'),x=document.createElement('span');d.className='msg mine';s.textContent=n;x.textContent=t;d.append(s,x);box.appendChild(d);msg.value='';box.scrollTop=box.scrollHeight};
 </script>
-
 </body>
 </html>
