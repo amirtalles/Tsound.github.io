@@ -1,70 +1,22 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tsound</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#111;color:#fff}
-#intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:.7s}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-#intro video{width:100%;height:100%;object-fit:cover}
-#tap-area{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34vw;height:18vw;max-width:300px;max-height:160px;min-width:180px;min-height:100px;background:transparent;border:0;cursor:pointer}
-header{padding:30px 20px;text-align:center;background:#181818}header h1{margin:0;font-size:36px}header p{color:#aaa}
-nav{text-align:center;padding:15px;background:#222}nav a{color:#fff;text-decoration:none;margin:0 10px}
-.container{max-width:900px;margin:auto;padding:25px}.post{background:#1d1d1d;padding:20px;margin-bottom:20px;border-radius:15px}.post h2{margin-top:0}
-.button{display:inline-block;background:#ff5500;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none}
-footer{text-align:center;padding:30px;color:#777}
-#chat-button{position:fixed;right:20px;bottom:20px;width:60px;height:60px;border:0;border-radius:50%;background:#ff5500;color:#fff;font-size:26px;cursor:pointer;z-index:5000;box-shadow:0 8px 25px #0008}
-#chat-window{position:fixed;right:20px;bottom:90px;width:min(360px,calc(100vw - 30px));height:500px;background:#181818;border:1px solid #333;border-radius:18px;overflow:hidden;z-index:4999;display:none;box-shadow:0 15px 40px #0009}
-#chat-window.open{display:flex;flex-direction:column}
-.chat-head{padding:15px;background:#222;display:flex;justify-content:space-between;align-items:center}
-#close-chat{background:none;border:0;color:#aaa;font-size:22px;cursor:pointer}
-#messages{flex:1;padding:12px;overflow:auto;display:flex;flex-direction:column;gap:8px}
-.msg{background:#252525;border-radius:12px;padding:8px 10px;max-width:85%;align-self:flex-start}.msg.mine{background:#ff5500;align-self:flex-end}
-.msg small{display:block;color:#aaa;font-size:10px;margin-bottom:3px}.msg.mine small{color:#ffe0d2}
-.chat-login{padding:12px;border-top:1px solid #333}
-#name,#message{padding:10px;border-radius:9px;border:1px solid #444;background:#111;color:#fff}
-#name{width:100%}.chat-form{display:flex;gap:7px;padding:10px;border-top:1px solid #333}
-#message{flex:1}#send{border:0;border-radius:9px;padding:0 15px;background:#ff5500;color:#fff;cursor:pointer}
-@media(max-width:600px){#chat-window{right:10px;bottom:80px;width:calc(100vw - 20px);height:65vh}#chat-button{right:15px;bottom:15px}}
-</style>
-</head>
-<body>
-
-<div id="intro">
-<video id="introVideo" autoplay muted playsinline preload="auto"><source src="intro.mp4" type="video/mp4"></video>
-<button id="tap-area" aria-label="Tap it"></button>
-</div>
-
-<header><h1>Tsound</h1><p>وبلاگ موسیقی و هنر</p></header>
-<nav><a href="#">خانه</a><a href="#">موسیقی</a><a href="#">نوشته‌ها</a><a href="#">درباره من</a></nav>
-<div class="container">
-<div class="post"><h2>به وبلاگ Tsound خوش آمدید 🎵</h2><p>اینجا می‌توانید اخبار، آهنگ‌ها، موزیک‌ویدیوها و مطالب جدید موسیقی را دنبال کنید.</p><a class="button" href="#">ادامه مطلب</a></div>
-<div class="post"><h2>آخرین آهنگ</h2><p>به‌زودی آهنگ‌های جدید در این قسمت قرار می‌گیرند.</p></div>
-</div>
-<footer>© 2026 Tsound</footer>
-
-<button id="chat-button" aria-label="باز کردن چت">💬</button>
-<div id="chat-window">
-<div class="chat-head"><strong>💬 چت Tsound</strong><button id="close-chat">×</button></div>
-<div id="messages"><div class="msg"><small>Tsound</small>این نسخه فعلاً آزمایشی است 👋</div></div>
-<div class="chat-login"><input id="name" maxlength="20" placeholder="اسم شما..."></div>
-<form class="chat-form" id="chat-form"><input id="message" maxlength="300" placeholder="پیامت رو بنویس..." autocomplete="off"><button id="send" type="submit">ارسال</button></form>
-</div>
-
-<script>
-const intro=document.getElementById('intro'),video=document.getElementById('introVideo'),tap=document.getElementById('tap-area');
-function enterSite(){intro.classList.add('hide');setTimeout(()=>intro.remove(),750)}
-tap.onclick=enterSite; video.onended=enterSite;
-
-const cb=document.getElementById('chat-button'),cw=document.getElementById('chat-window'),cc=document.getElementById('close-chat');
-const form=document.getElementById('chat-form'),name=document.getElementById('name'),msg=document.getElementById('message'),box=document.getElementById('messages');
-name.value=localStorage.getItem('tsound_name')||'';
-cb.onclick=()=>{cw.classList.add('open');msg.focus()};cc.onclick=()=>cw.classList.remove('open');
-form.onsubmit=e=>{e.preventDefault();let n=name.value.trim(),t=msg.value.trim();if(!n){name.focus();return}if(!t)return;localStorage.setItem('tsound_name',n);
-let d=document.createElement('div'),s=document.createElement('small'),x=document.createElement('span');d.className='msg mine';s.textContent=n;x.textContent=t;d.append(s,x);box.appendChild(d);msg.value='';box.scrollTop=box.scrollHeight};
-</script>
-</body>
-</html>
+<!doctype html><html lang="fa" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AmirTalles</title><style>
+*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
+main{max-width:900px;margin:auto;padding:35px 15px 60px;text-align:center}.hero{width:min(420px,90vw);display:block;margin:0 auto 25px}
+.links{position:relative;width:100%;margin:0 auto 35px}.links img{width:100%;display:block}
+.links a{position:absolute;top:0;height:100%;width:20%;display:block}.links a:nth-of-type(1){left:0}.links a:nth-of-type(2){left:20%}.links a:nth-of-type(3){left:40%}.links a:nth-of-type(4){left:60%}.links a:nth-of-type(5){left:80%}
+h1{font-size:40px;margin:0 0 8px}.subtitle{font-size:18px;color:#ddd;margin-bottom:28px}.bio{max-width:720px;margin:auto;text-align:right;line-height:2;font-size:17px;color:#ddd}.bio p{margin:0 0 16px}.welcome{margin-top:28px;direction:ltr;font-size:18px}@media(max-width:600px){h1{font-size:32px}.subtitle{font-size:16px}.bio{font-size:15px}}
+</style></head><body><main>
+<img class="hero" src="amir-talles.jpg" alt="AmirTalles">
+<div class="links"><img src="platforms.jpg" alt="Social links">
+<a href="https://on.soundcloud.com/BBmakilmW2O222JIli" target="_blank" rel="noopener"></a>
+<a href="https://t.me/AmirTalles1" target="_blank" rel="noopener"></a>
+<a href="https://www.instagram.com/amirtalles" target="_blank" rel="noopener"></a>
+<a href="https://www.youtube.com/@AmirTalles" target="_blank" rel="noopener"></a>
+<a href="https://open.spotify.com/artist/3GV6srvXYMrip7VMsxXJLJ" target="_blank" rel="noopener"></a></div>
+<h1>AmirTalles</h1><div class="subtitle"><strong>امیر محمد توسلی</strong>؛ هنرمند و طراح.</div>
+<section class="bio"><p>من در مرز میان خیال و واقعیت خلق می‌کنم؛ جایی که ایده‌ها به تصویر تبدیل می‌شوند و احساسات، شکل تازه‌ای پیدا می‌کنند.</p>
+<p>برای من هنر تنها یک اثر نیست؛ بخشی از نگاه من به جهان است. هر طراحی، هر تصویر و هر تجربه، تکه‌ای از مسیری‌ست که در حال ساختنش هستم.</p>
+<p><strong>AmirTalles</strong> نام این مسیر است؛ روایتی شخصی از هنر، طراحی، تجربه و خلق.</p>
+<p>این وب‌سایت پنجره‌ای‌ست به دنیای من؛ به چیزهایی که ساخته‌ام، چیزهایی که در حال ساختنشان هستم و داستان‌هایی که هنوز ادامه دارند.</p></section>
+<div class="welcome">Welcome to my world.</div></main></body></html>
