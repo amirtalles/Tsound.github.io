@@ -1,22 +1,422 @@
-<!doctype html><html lang="fa" dir="rtl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AmirTalles</title><style>
-*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
-main{max-width:900px;margin:auto;padding:35px 15px 60px;text-align:center}.hero{width:min(420px,90vw);display:block;margin:0 auto 25px}
-.links{position:relative;width:100%;margin:0 auto 35px}.links img{width:100%;display:block}
-.links a{position:absolute;top:0;height:100%;width:20%;display:block}.links a:nth-of-type(1){left:0}.links a:nth-of-type(2){left:20%}.links a:nth-of-type(3){left:40%}.links a:nth-of-type(4){left:60%}.links a:nth-of-type(5){left:80%}
-h1{font-size:40px;margin:0 0 8px}.subtitle{font-size:18px;color:#ddd;margin-bottom:28px}.bio{max-width:720px;margin:auto;text-align:right;line-height:2;font-size:17px;color:#ddd}.bio p{margin:0 0 16px}.welcome{margin-top:28px;direction:ltr;font-size:18px}@media(max-width:600px){h1{font-size:32px}.subtitle{font-size:16px}.bio{font-size:15px}}
-</style></head><body><main>
-<img class="hero" src="amir-talles.jpg" alt="AmirTalles">
-<div class="links"><img src="platforms.jpg" alt="Social links">
-<a href="https://on.soundcloud.com/BBmakilmW2O222JIli" target="_blank" rel="noopener"></a>
-<a href="https://t.me/AmirTalles1" target="_blank" rel="noopener"></a>
-<a href="https://www.instagram.com/amirtalles" target="_blank" rel="noopener"></a>
-<a href="https://www.youtube.com/@AmirTalles" target="_blank" rel="noopener"></a>
-<a href="https://open.spotify.com/artist/3GV6srvXYMrip7VMsxXJLJ" target="_blank" rel="noopener"></a></div>
-<h1>AmirTalles</h1><div class="subtitle"><strong>امیر محمد توسلی</strong>؛ هنرمند و طراح.</div>
-<section class="bio"><p>من در مرز میان خیال و واقعیت خلق می‌کنم؛ جایی که ایده‌ها به تصویر تبدیل می‌شوند و احساسات، شکل تازه‌ای پیدا می‌کنند.</p>
-<p>برای من هنر تنها یک اثر نیست؛ بخشی از نگاه من به جهان است. هر طراحی، هر تصویر و هر تجربه، تکه‌ای از مسیری‌ست که در حال ساختنش هستم.</p>
-<p><strong>AmirTalles</strong> نام این مسیر است؛ روایتی شخصی از هنر، طراحی، تجربه و خلق.</p>
-<p>این وب‌سایت پنجره‌ای‌ست به دنیای من؛ به چیزهایی که ساخته‌ام، چیزهایی که در حال ساختنشان هستم و داستان‌هایی که هنوز ادامه دارند.</p></section>
-<div class="welcome">Welcome to my world.</div></main></body></html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>AmirTalles</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+#intro {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#intro video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* دکمه Tap it وسط ویدئو */
+
+#tapButton {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 14px 30px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 50px;
+
+  font-size: 18px;
+  letter-spacing: 2px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(5px);
+
+  transition: 0.3s;
+}
+
+#tapButton:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* =========================
+   MAIN SITE
+========================= */
+
+#mainSite {
+  display: none;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 35px 15px 60px;
+  text-align: center;
+}
+
+.hero {
+  width: min(420px, 90vw);
+  display: block;
+  margin: 0 auto 25px;
+}
+
+/* =========================
+   PLATFORM LINKS
+========================= */
+
+.links {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 35px;
+}
+
+.links img {
+  width: 100%;
+  display: block;
+}
+
+/* هر آیکون یک لینک جدا */
+
+.links a {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  display: block;
+}
+
+/* چپ به راست:
+   SoundCloud
+   Telegram
+   Instagram
+   YouTube
+   Spotify
+*/
+
+.links a:nth-of-type(1) {
+  left: 0;
+}
+
+.links a:nth-of-type(2) {
+  left: 20%;
+}
+
+.links a:nth-of-type(3) {
+  left: 40%;
+}
+
+.links a:nth-of-type(4) {
+  left: 60%;
+}
+
+.links a:nth-of-type(5) {
+  left: 80%;
+}
+
+/* =========================
+   BIO
+========================= */
+
+h1 {
+  font-size: 40px;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #ddd;
+  margin-bottom: 28px;
+}
+
+.bio {
+  max-width: 720px;
+  margin: auto;
+  text-align: right;
+  line-height: 2;
+  font-size: 17px;
+  color: #ddd;
+}
+
+.bio p {
+  margin: 0 0 16px;
+}
+
+.welcome {
+  margin-top: 28px;
+  direction: ltr;
+  font-size: 18px;
+}
+
+/* موبایل */
+
+@media(max-width:600px) {
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .bio {
+    font-size: 15px;
+  }
+
+  #tapButton {
+    font-size: 16px;
+    padding: 12px 26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     INTRO VIDEO
+========================= -->
+
+<div id="intro">
+
+  <video
+    id="introVideo"
+    autoplay
+    muted
+    playsinline
+    preload="auto">
+
+    <source src="intro.mp4" type="video/mp4">
+
+  </video>
+
+  <button id="tapButton">
+    Tap it
+  </button>
+
+</div>
+
+
+<!-- =========================
+     MAIN SITE
+========================= -->
+
+<div id="mainSite">
+
+<main>
+
+  <!-- عکس AmirTalles -->
+
+  <img
+    class="hero"
+    src="amir-talles.jpg"
+    alt="AmirTalles">
+
+
+  <!-- =========================
+       PLATFORM LINKS
+  ========================= -->
+
+  <div class="links">
+
+    <img
+      src="platforms.jpg"
+      alt="Social links">
+
+
+    <!-- SoundCloud -->
+
+    <a
+      href="https://on.soundcloud.com/BBmakilmW2O222JIli"
+      target="_blank"
+      rel="noopener"
+      aria-label="SoundCloud">
+    </a>
+
+
+    <!-- Telegram -->
+
+    <a
+      href="https://t.me/AmirTalles1"
+      target="_blank"
+      rel="noopener"
+      aria-label="Telegram">
+    </a>
+
+
+    <!-- Instagram -->
+
+    <a
+      href="https://www.instagram.com/amirtalles"
+      target="_blank"
+      rel="noopener"
+      aria-label="Instagram">
+    </a>
+
+
+    <!-- YouTube -->
+
+    <a
+      href="https://www.youtube.com/@AmirTalles"
+      target="_blank"
+      rel="noopener"
+      aria-label="YouTube">
+    </a>
+
+
+    <!-- Spotify -->
+
+    <a
+      href="https://open.spotify.com/artist/3GV6srvXYMrip7VMsxXJLJ"
+      target="_blank"
+      rel="noopener"
+      aria-label="Spotify">
+    </a>
+
+  </div>
+
+
+  <!-- =========================
+       NAME
+  ========================= -->
+
+  <h1>AmirTalles</h1>
+
+  <div class="subtitle">
+    <strong>امیر محمد توسلی</strong>؛ هنرمند و طراح.
+  </div>
+
+
+  <!-- =========================
+       BIOGRAPHY
+  ========================= -->
+
+  <section class="bio">
+
+    <p>
+      من در مرز میان خیال و واقعیت خلق می‌کنم؛
+      جایی که ایده‌ها به تصویر تبدیل می‌شوند
+      و احساسات، شکل تازه‌ای پیدا می‌کنند.
+    </p>
+
+    <p>
+      برای من هنر تنها یک اثر نیست؛
+      بخشی از نگاه من به جهان است.
+      هر طراحی، هر تصویر و هر تجربه،
+      تکه‌ای از مسیری‌ست که در حال ساختنش هستم.
+    </p>
+
+    <p>
+      <strong>AmirTalles</strong>
+      نام این مسیر است؛
+      روایتی شخصی از هنر، طراحی، تجربه و خلق.
+    </p>
+
+    <p>
+      این وب‌سایت پنجره‌ای‌ست به دنیای من؛
+      به چیزهایی که ساخته‌ام،
+      چیزهایی که در حال ساختنشان هستم
+      و داستان‌هایی که هنوز ادامه دارند.
+    </p>
+
+  </section>
+
+
+  <div class="welcome">
+    Welcome to my world.
+  </div>
+
+</main>
+
+</div>
+
+
+<!-- =========================
+     INTRO SCRIPT
+========================= -->
+
+<script>
+
+const intro = document.getElementById("intro");
+const mainSite = document.getElementById("mainSite");
+const tapButton = document.getElementById("tapButton");
+const video = document.getElementById("introVideo");
+
+
+function enterSite() {
+
+  intro.style.transition = "opacity 0.8s ease";
+  intro.style.opacity = "0";
+
+  setTimeout(function() {
+
+    intro.style.display = "none";
+    mainSite.style.display = "block";
+
+  }, 800);
+
+}
+
+
+/* با زدن Tap it وارد سایت می‌شود */
+
+tapButton.addEventListener("click", enterSite);
+
+
+/* اگر ویدئو تمام شد، دکمه همچنان می‌ماند
+   و کاربر خودش وارد سایت می‌شود */
+
+video.addEventListener("ended", function() {
+
+  tapButton.style.display = "block";
+
+});
+
+
+/* تلاش برای پخش خودکار */
+
+video.play().catch(function() {
+
+  /* در بعضی موبایل‌ها autoplay محدود است.
+     کاربر با Tap it وارد سایت می‌شود. */
+
+});
+
+</script>
+
+</body>
+</html>
