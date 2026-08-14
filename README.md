@@ -1,2 +1,2 @@
 # Tsound.github.io
-Monthly artists (pearsian)
+Monthly artists (persian)
