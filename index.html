@@ -569,6 +569,83 @@ document.addEventListener(
   { once: true }
 );
 
+  <script>
+
+const intro = document.getElementById("intro");
+const mainSite = document.getElementById("mainSite");
+const tapArea = document.getElementById("tapArea");
+const video = document.getElementById("introVideo");
+
+
+/* =========================
+   ورود به سایت
+========================= */
+
+function enterSite() {
+
+  /* قطع کامل ویدیو و صدا */
+
+  video.pause();
+  video.currentTime = 0;
+  video.muted = true;
+  video.volume = 0;
+
+  /* محو شدن Intro */
+
+  intro.style.transition = "opacity 0.8s ease";
+  intro.style.opacity = "0";
+
+  setTimeout(function() {
+
+    intro.style.display = "none";
+    mainSite.style.display = "block";
+
+    window.scrollTo(0, 0);
+
+  }, 800);
+
+}
+
+
+/* =========================
+   Tap it
+========================= */
+
+tapArea.addEventListener("click", function() {
+
+  enterSite();
+
+});
+
+
+/* مخصوص موبایل */
+
+tapArea.addEventListener("touchend", function(event) {
+
+  event.preventDefault();
+
+  enterSite();
+
+}, { passive: false });
+
+
+/* =========================
+   پخش Intro با صدا
+========================= */
+
+video.muted = false;
+video.volume = 1;
+
+video.play().catch(function() {
+
+  /*
+   بعضی مرورگرهای موبایل اجازه
+   پخش خودکار با صدا را نمی‌دهند.
+  */
+
+});
+
+
 </script>
 
 
