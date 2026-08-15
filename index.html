@@ -2,11 +2,12 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>AmirTalles</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -20,6 +21,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
+
 /* =========================
    INTRO
 ========================= */
@@ -27,9 +29,12 @@ body {
 #intro {
   position: fixed;
   inset: 0;
+
   width: 100%;
   height: 100%;
+
   background: #000;
+
   z-index: 99999;
 
   display: flex;
@@ -39,21 +44,24 @@ body {
   overflow: hidden;
 }
 
+
 #intro video {
   position: absolute;
+
   inset: 0;
 
   width: 100%;
   height: 100%;
 
   object-fit: cover;
+
   display: block;
 }
 
+
 /*
    ناحیه شفاف روی Tap it
-   Tap it داخل خود ویدئو طراحی شده.
-   این قسمت کاملاً شفاف است.
+   Tap it داخل خود ویدئو طراحی شده
 */
 
 #tapArea {
@@ -68,6 +76,7 @@ body {
   height: 90px;
 
   background: transparent;
+
   border: none;
   outline: none;
 
@@ -88,9 +97,12 @@ body {
   display: none;
 }
 
+
 main {
   max-width: 900px;
+
   margin: auto;
+
   padding: 35px 15px 60px;
 
   text-align: center;
@@ -122,20 +134,22 @@ main {
   margin: 0 auto 35px;
 }
 
+
 .links img {
   width: 100%;
+
   display: block;
 }
 
 
 /*
-   ترتیب آیکون‌ها از چپ به راست:
+   ترتیب از چپ به راست:
 
-   1 SoundCloud
-   2 Telegram
-   3 Instagram
-   4 YouTube
-   5 Spotify
+   SoundCloud
+   Telegram
+   Instagram
+   YouTube
+   Spotify
 */
 
 .links a {
@@ -144,6 +158,7 @@ main {
   top: 0;
 
   height: 100%;
+
   width: 20%;
 
   display: block;
@@ -151,21 +166,26 @@ main {
   cursor: pointer;
 }
 
+
 .links a:nth-of-type(1) {
   left: 0;
 }
+
 
 .links a:nth-of-type(2) {
   left: 20%;
 }
 
+
 .links a:nth-of-type(3) {
   left: 40%;
 }
 
+
 .links a:nth-of-type(4) {
   left: 60%;
 }
+
 
 .links a:nth-of-type(5) {
   left: 80%;
@@ -182,6 +202,7 @@ h1 {
   margin: 0 0 8px;
 }
 
+
 .subtitle {
   font-size: 18px;
 
@@ -192,7 +213,7 @@ h1 {
 
 
 /* =========================
-   BIOGRAPHY
+   BIO
 ========================= */
 
 .bio {
@@ -208,6 +229,7 @@ h1 {
 
   color: #ddd;
 }
+
 
 .bio p {
   margin: 0 0 16px;
@@ -268,7 +290,6 @@ h1 {
   <video
     id="introVideo"
     autoplay
-    muted
     playsinline
     webkit-playsinline
     preload="auto">
@@ -281,13 +302,13 @@ h1 {
 
 
   <!--
-       Tap it داخل خود ویدئو قرار دارد.
-       این فقط ناحیه لمس شفاف وسط صفحه است.
+       Tap it داخل خود ویدئو است.
+       این فقط ناحیه لمس وسط تصویر است.
   -->
 
   <button
     id="tapArea"
-    aria-label="Enter website">
+    aria-label="Tap it">
   </button>
 
 </div>
@@ -295,7 +316,7 @@ h1 {
 
 
 <!-- =========================
-     MAIN WEBSITE
+     MAIN SITE
 ========================= -->
 
 <div id="mainSite">
@@ -303,9 +324,7 @@ h1 {
 <main>
 
 
-  <!-- =========================
-       PHOTO
-  ========================= -->
+  <!-- عکس -->
 
   <img
     class="hero"
@@ -315,7 +334,7 @@ h1 {
 
 
   <!-- =========================
-       SOCIAL LINKS
+       PLATFORM LINKS
   ========================= -->
 
   <div class="links">
@@ -325,7 +344,7 @@ h1 {
       alt="Social links">
 
 
-    <!-- 1. SoundCloud -->
+    <!-- SoundCloud -->
 
     <a
       href="https://on.soundcloud.com/BBmakilmW2O222JIli"
@@ -335,7 +354,7 @@ h1 {
     </a>
 
 
-    <!-- 2. Telegram -->
+    <!-- Telegram -->
 
     <a
       href="https://t.me/AmirTalles1"
@@ -345,7 +364,7 @@ h1 {
     </a>
 
 
-    <!-- 3. Instagram -->
+    <!-- Instagram -->
 
     <a
       href="https://www.instagram.com/amirtalles"
@@ -355,7 +374,7 @@ h1 {
     </a>
 
 
-    <!-- 4. YouTube -->
+    <!-- YouTube -->
 
     <a
       href="https://www.youtube.com/@AmirTalles"
@@ -365,7 +384,7 @@ h1 {
     </a>
 
 
-    <!-- 5. Spotify -->
+    <!-- Spotify -->
 
     <a
       href="https://open.spotify.com/artist/3GV6srvXYMrip7VMsxXJLJ"
@@ -473,12 +492,22 @@ const video =
   document.getElementById("introVideo");
 
 
-
-/*
+/* =========================
    ورود به سایت
-*/
+========================= */
 
 function enterSite() {
+
+  /* قطع ویدئو و صدا */
+
+  video.pause();
+
+  video.muted = true;
+
+  video.volume = 0;
+
+
+  /* محو شدن Intro */
 
   intro.style.transition =
     "opacity 0.8s ease";
@@ -499,10 +528,9 @@ function enterSite() {
 }
 
 
-
-/*
-   لمس Tap it
-*/
+/* =========================
+   Tap it
+========================= */
 
 tapArea.addEventListener(
   "click",
@@ -514,10 +542,9 @@ tapArea.addEventListener(
 );
 
 
-
-/*
-   پشتیبانی بهتر از لمس موبایل
-*/
+/* =========================
+   لمس موبایل
+========================= */
 
 tapArea.addEventListener(
   "touchend",
@@ -528,123 +555,29 @@ tapArea.addEventListener(
     enterSite();
 
   },
-  { passive: false }
+  {
+    passive: false
+  }
 );
 
 
-
-/*
-   تلاش برای اجرای خودکار ویدئو
-*/
-
-video.play().catch(function() {
-
-  /*
-     بعضی مرورگرهای موبایل
-     autoplay را محدود می‌کنند.
-  */
-
-});
-
-
-
-/*
-   اگر ویدئو متوقف بود،
-   با اولین لمس دوباره تلاش می‌کنیم.
-*/
-
-document.addEventListener(
-  "touchstart",
-  function() {
-
-    if (video.paused) {
-
-      video.play().catch(
-        function() {}
-      );
-
-    }
-
-  },
-  { once: true }
-);
-
-  <script>
-
-const intro = document.getElementById("intro");
-const mainSite = document.getElementById("mainSite");
-const tapArea = document.getElementById("tapArea");
-const video = document.getElementById("introVideo");
-
-
 /* =========================
-   ورود به سایت
-========================= */
-
-function enterSite() {
-
-  /* قطع کامل ویدیو و صدا */
-
-  video.pause();
-  video.currentTime = 0;
-  video.muted = true;
-  video.volume = 0;
-
-  /* محو شدن Intro */
-
-  intro.style.transition = "opacity 0.8s ease";
-  intro.style.opacity = "0";
-
-  setTimeout(function() {
-
-    intro.style.display = "none";
-    mainSite.style.display = "block";
-
-    window.scrollTo(0, 0);
-
-  }, 800);
-
-}
-
-
-/* =========================
-   Tap it
-========================= */
-
-tapArea.addEventListener("click", function() {
-
-  enterSite();
-
-});
-
-
-/* مخصوص موبایل */
-
-tapArea.addEventListener("touchend", function(event) {
-
-  event.preventDefault();
-
-  enterSite();
-
-}, { passive: false });
-
-
-/* =========================
-   پخش Intro با صدا
+   پخش Intro
 ========================= */
 
 video.muted = false;
+
 video.volume = 1;
 
 video.play().catch(function() {
 
   /*
-   بعضی مرورگرهای موبایل اجازه
-   پخش خودکار با صدا را نمی‌دهند.
+     اگر مرورگر autoplay با صدا را
+     محدود کند، با تعامل کاربر
+     امکان پخش فراهم می‌شود.
   */
 
 });
-
 
 </script>
 
