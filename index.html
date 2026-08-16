@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>AmirTalles</title>
 
 <style>
+
+/* =========================
+   GENERAL
+========================= */
 
 * {
   box-sizing: border-box;
@@ -24,7 +27,7 @@ body {
 
 
 /* =========================
-   INTRO
+   INTRO SYSTEM
 ========================= */
 
 #intro {
@@ -38,9 +41,186 @@ body {
 
   z-index: 99999;
 
+  overflow: hidden;
+}
+
+
+/* =========================
+   QUESTION VIDEO
+========================= */
+
+#questionScreen {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  overflow: hidden;
+
+  opacity: 1;
+
+  transition: opacity 0.8s ease;
+}
+
+
+#questionVideo {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: 1;
+}
+
+
+/* تاریک‌کننده ظریف روی ویدئو */
+
+#questionScreen::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0,0,0,0.25);
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+/* =========================
+   QUESTION TEXT
+========================= */
+
+#questionText {
+  position: relative;
+
+  z-index: 5;
+
+  color: #fff;
+
+  font-size: clamp(25px, 5vw, 48px);
+
+  font-weight: 700;
+
+  text-align: center;
+
+  padding: 20px 25px;
+
+  line-height: 1.7;
+
+  text-shadow:
+    0 2px 15px rgba(0,0,0,0.8);
+
+  opacity: 1;
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+
+  transform: translateY(0);
+}
+
+
+/* =========================
+   YES BUTTON
+========================= */
+
+#yesButton {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 10;
+
+  min-width: 130px;
+
+  padding: 15px 38px;
+
+  border: 1px solid rgba(255,255,255,0.8);
+
+  border-radius: 50px;
+
+  background: rgba(0,0,0,0.3);
+
+  color: #fff;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 20px;
+
+  letter-spacing: 3px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+
+  -webkit-backdrop-filter: blur(8px);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.6s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+
+#yesButton.show {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+
+#yesButton:hover {
+  background: rgba(255,255,255,0.15);
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.06);
+}
+
+
+#yesButton:active {
+  transform:
+    translate(-50%, -50%)
+    scale(0.96);
+}
+
+
+/* =========================
+   MUSIC INTRO VIDEO
+========================= */
+
+#musicScreen {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: #000;
+
+  display: none;
+
+  opacity: 0;
+
+  transition: opacity 0.8s ease;
 
   overflow: hidden;
 }
@@ -48,7 +228,6 @@ body {
 
 #introVideo {
   position: absolute;
-
   inset: 0;
 
   width: 100%;
@@ -57,39 +236,6 @@ body {
   object-fit: cover;
 
   display: block;
-
-  z-index: 1;
-}
-
-
-/* =========================
-   TAP IT AREA
-========================= */
-
-#tapArea {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 220px;
-  height: 90px;
-
-  background: transparent;
-
-  border: none;
-  outline: none;
-
-  padding: 0;
-  margin: 0;
-
-  z-index: 10;
-
-  cursor: pointer;
-
-  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -146,16 +292,6 @@ main {
 }
 
 
-/*
-   ترتیب از چپ به راست:
-
-   1. SoundCloud
-   2. Telegram
-   3. Instagram
-   4. YouTube
-   5. Spotify
-*/
-
 .links a {
   position: absolute;
 
@@ -170,6 +306,16 @@ main {
   cursor: pointer;
 }
 
+
+/*
+   چپ به راست:
+
+   SoundCloud
+   Telegram
+   Instagram
+   YouTube
+   Spotify
+*/
 
 .links a:nth-of-type(1) {
   left: 0;
@@ -217,7 +363,7 @@ h1 {
 
 
 /* =========================
-   BIOGRAPHY
+   BIO
 ========================= */
 
 .bio {
@@ -271,60 +417,105 @@ h1 {
     font-size: 15px;
   }
 
-  #tapArea {
-    width: 200px;
-    height: 80px;
+  #questionText {
+    font-size: 25px;
+
+    padding: 15px;
+  }
+
+  #yesButton {
+    min-width: 115px;
+
+    padding: 13px 32px;
+
+    font-size: 18px;
   }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- =========================
+<!-- ==================================================
      INTRO
-========================= -->
+================================================== -->
 
 <div id="intro">
 
-  <video
-    id="introVideo"
-    autoplay
-    playsinline
-    webkit-playsinline
-    preload="auto"
-    controlslist="nodownload">
 
-    <source
-      src="./intro.mp4"
-      type="video/mp4">
+  <!-- =========================
+       QUESTION VIDEO
+  ========================= -->
 
-  </video>
+  <div id="questionScreen">
+
+    <video
+      id="questionVideo"
+      autoplay
+      muted
+      playsinline
+      webkit-playsinline
+      preload="auto">
+
+      <source
+        src="./question.mp4"
+        type="video/mp4">
+
+    </video>
 
 
-  <!--
-       Tap it داخل خود ویدئو طراحی شده.
-       این دکمه کاملاً شفاف است.
-  -->
+    <!-- سؤال -->
 
-  <button
-    id="tapArea"
-    type="button"
-    aria-label="Tap it">
-  </button>
+    <div id="questionText">
+      می‌خوای موزیکامو گوش بدی؟
+    </div>
+
+
+    <!-- YES -->
+
+    <button
+      id="yesButton"
+      type="button">
+
+      YES
+
+    </button>
+
+  </div>
+
+
+
+  <!-- =========================
+       MUSIC INTRO VIDEO
+  ========================= -->
+
+  <div id="musicScreen">
+
+    <video
+      id="introVideo"
+      playsinline
+      webkit-playsinline
+      preload="auto">
+
+      <source
+        src="./intro.mp4"
+        type="video/mp4">
+
+    </video>
+
+  </div>
 
 </div>
 
 
 
-<!-- =========================
+<!-- ==================================================
      MAIN SITE
-========================= -->
+================================================== -->
 
 <div id="mainSite">
 
@@ -332,7 +523,7 @@ h1 {
 
 
   <!-- =========================
-       PROFILE
+       PROFILE IMAGE
   ========================= -->
 
   <img
@@ -428,7 +619,7 @@ h1 {
 
 
   <!-- =========================
-       BIO
+       BIOGRAPHY
   ========================= -->
 
   <section class="bio">
@@ -482,11 +673,33 @@ h1 {
 
 
 
-<!-- =========================
-     INTRO SCRIPT
-========================= -->
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
 
 <script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const questionScreen =
+  document.getElementById("questionScreen");
+
+const questionVideo =
+  document.getElementById("questionVideo");
+
+const questionText =
+  document.getElementById("questionText");
+
+const yesButton =
+  document.getElementById("yesButton");
+
+const musicScreen =
+  document.getElementById("musicScreen");
+
+const introVideo =
+  document.getElementById("introVideo");
 
 const intro =
   document.getElementById("intro");
@@ -494,174 +707,178 @@ const intro =
 const mainSite =
   document.getElementById("mainSite");
 
-const tapArea =
-  document.getElementById("tapArea");
 
-const video =
-  document.getElementById("introVideo");
+/* =========================
+   QUESTION VIDEO
+========================= */
+
+questionVideo.muted = true;
+
+
+/*
+   شروع ویدیوی سؤال
+*/
+
+questionVideo.play().catch(function() {
+
+  /*
+     autoplay بدون صدا معمولاً
+     توسط موبایل اجازه داده می‌شود.
+  */
+
+});
 
 
 /* =========================
-   شروع ویدئو
+   نمایش YES بعد از ۲ ثانیه
 ========================= */
 
-function startVideo() {
+setTimeout(function() {
 
-  /*
-     صدا فعال
-  */
+  questionText.style.opacity = "0";
 
-  video.muted = false;
-
-  video.volume = 1;
-
-
-  /*
-     اجرای ویدئو
-  */
-
-  const playPromise = video.play();
-
-
-  if (playPromise !== undefined) {
-
-    playPromise.catch(function() {
-
-      /*
-         اگر مرورگر autoplay
-         با صدا را مسدود کرد،
-         با تعامل کاربر دوباره اجرا می‌شود.
-      */
-
-      video.muted = false;
-
-      video.volume = 1;
-
-    });
-
-  }
-
-}
-
-
-/* =========================
-   ورود به سایت
-========================= */
-
-function enterSite() {
-
-  /*
-     قطع کامل ویدئو و صدا
-  */
-
-  video.pause();
-
-  video.muted = true;
-
-  video.volume = 0;
-
-
-  /*
-     محو شدن Intro
-  */
-
-  intro.style.transition =
-    "opacity 0.8s ease";
-
-  intro.style.opacity = "0";
+  questionText.style.transform =
+    "translateY(-15px)";
 
 
   setTimeout(function() {
 
-    intro.style.display = "none";
+    yesButton.classList.add("show");
 
-    mainSite.style.display = "block";
+  }, 500);
 
-    window.scrollTo(0, 0);
-
-  }, 800);
-
-}
+}, 2000);
 
 
 /* =========================
-   Tap it
+   YES
 ========================= */
 
-tapArea.addEventListener(
+yesButton.addEventListener(
   "click",
   function() {
 
     /*
-       اگر ویدئو متوقف است،
-       با لمس کاربر دوباره اجرا شود.
+       ویدیوی سؤال متوقف شود
     */
 
-    if (video.paused) {
+    questionVideo.pause();
 
-      video.muted = false;
-
-      video.volume = 1;
-
-      video.play().catch(function() {});
-
-      return;
-    }
+    questionVideo.currentTime = 0;
 
 
     /*
-       اگر ویدئو در حال پخش است،
-       وارد سایت شو.
+       سؤال محو شود
     */
 
-    enterSite();
+    questionScreen.style.opacity = "0";
+
+
+    /*
+       کمی صبر برای افکت
+    */
+
+    setTimeout(function() {
+
+      questionScreen.style.display = "none";
+
+
+      /*
+         ویدیوی موزیک نمایش داده شود
+      */
+
+      musicScreen.style.display = "block";
+
+
+      setTimeout(function() {
+
+        musicScreen.style.opacity = "1";
+
+
+        /*
+           مهم:
+           کلیک روی YES تعامل مستقیم کاربر است.
+           بنابراین اجازه داریم ویدئو را
+           با صدا اجرا کنیم.
+        */
+
+        introVideo.muted = false;
+
+        introVideo.volume = 1;
+
+        introVideo.currentTime = 0;
+
+
+        const playPromise =
+          introVideo.play();
+
+
+        if (playPromise !== undefined) {
+
+          playPromise.catch(function() {
+
+            /*
+               اگر مرورگر اجازه صدای
+               خودکار را نداد، دوباره
+               با همان تعامل تلاش می‌کنیم.
+            */
+
+            introVideo.muted = false;
+
+            introVideo.volume = 1;
+
+            introVideo.play().catch(function() {});
+
+          });
+
+        }
+
+      }, 50);
+
+    }, 800);
 
   }
 );
 
 
 /* =========================
-   موبایل
+   پایان INTRO
 ========================= */
 
-tapArea.addEventListener(
-  "touchend",
-  function(event) {
-
-    event.preventDefault();
-
-
-    if (video.paused) {
-
-      video.muted = false;
-
-      video.volume = 1;
-
-      video.play().catch(function() {});
-
-      return;
-
-    }
-
-
-    enterSite();
-
-  },
-  {
-    passive: false
-  }
-);
-
-
-/* =========================
-   شروع اولیه
-========================= */
-
-window.addEventListener(
-  "load",
+introVideo.addEventListener(
+  "ended",
   function() {
 
-    startVideo();
+    /*
+       ویدئو و صدا متوقف شوند
+    */
+
+    introVideo.pause();
+
+    introVideo.muted = true;
+
+    introVideo.volume = 0;
+
+
+    /*
+       Intro محو شود
+    */
+
+    intro.style.transition =
+      "opacity 1s ease";
+
+    intro.style.opacity = "0";
+
+
+    setTimeout(function() {
+
+      intro.style.display = "none";
+
+      mainSite.style.display = "block";
+
+      window.scrollTo(0, 0);
+
+    }, 1000);
 
   }
 );
