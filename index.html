@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -45,7 +46,7 @@ body {
 }
 
 
-#intro video {
+#introVideo {
   position: absolute;
 
   inset: 0;
@@ -56,13 +57,14 @@ body {
   object-fit: cover;
 
   display: block;
+
+  z-index: 1;
 }
 
 
-/*
-   ناحیه شفاف روی Tap it
-   Tap it داخل خود ویدئو طراحی شده
-*/
+/* =========================
+   TAP IT AREA
+========================= */
 
 #tapArea {
   position: absolute;
@@ -83,9 +85,11 @@ body {
   padding: 0;
   margin: 0;
 
+  z-index: 10;
+
   cursor: pointer;
 
-  z-index: 20;
+  -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -145,11 +149,11 @@ main {
 /*
    ترتیب از چپ به راست:
 
-   SoundCloud
-   Telegram
-   Instagram
-   YouTube
-   Spotify
+   1. SoundCloud
+   2. Telegram
+   3. Instagram
+   4. YouTube
+   5. Spotify
 */
 
 .links a {
@@ -213,7 +217,7 @@ h1 {
 
 
 /* =========================
-   BIO
+   BIOGRAPHY
 ========================= */
 
 .bio {
@@ -275,6 +279,7 @@ h1 {
 }
 
 </style>
+
 </head>
 
 
@@ -282,7 +287,7 @@ h1 {
 
 
 <!-- =========================
-     INTRO VIDEO
+     INTRO
 ========================= -->
 
 <div id="intro">
@@ -292,7 +297,8 @@ h1 {
     autoplay
     playsinline
     webkit-playsinline
-    preload="auto">
+    preload="auto"
+    controlslist="nodownload">
 
     <source
       src="./intro.mp4"
@@ -302,12 +308,13 @@ h1 {
 
 
   <!--
-       Tap it داخل خود ویدئو است.
-       این فقط ناحیه لمس وسط تصویر است.
+       Tap it داخل خود ویدئو طراحی شده.
+       این دکمه کاملاً شفاف است.
   -->
 
   <button
     id="tapArea"
+    type="button"
     aria-label="Tap it">
   </button>
 
@@ -324,7 +331,9 @@ h1 {
 <main>
 
 
-  <!-- عکس -->
+  <!-- =========================
+       PROFILE
+  ========================= -->
 
   <img
     class="hero"
@@ -419,7 +428,7 @@ h1 {
 
 
   <!-- =========================
-       BIOGRAPHY
+       BIO
   ========================= -->
 
   <section class="bio">
@@ -474,7 +483,7 @@ h1 {
 
 
 <!-- =========================
-     JAVASCRIPT
+     INTRO SCRIPT
 ========================= -->
 
 <script>
@@ -493,12 +502,57 @@ const video =
 
 
 /* =========================
+   شروع ویدئو
+========================= */
+
+function startVideo() {
+
+  /*
+     صدا فعال
+  */
+
+  video.muted = false;
+
+  video.volume = 1;
+
+
+  /*
+     اجرای ویدئو
+  */
+
+  const playPromise = video.play();
+
+
+  if (playPromise !== undefined) {
+
+    playPromise.catch(function() {
+
+      /*
+         اگر مرورگر autoplay
+         با صدا را مسدود کرد،
+         با تعامل کاربر دوباره اجرا می‌شود.
+      */
+
+      video.muted = false;
+
+      video.volume = 1;
+
+    });
+
+  }
+
+}
+
+
+/* =========================
    ورود به سایت
 ========================= */
 
 function enterSite() {
 
-  /* قطع ویدئو و صدا */
+  /*
+     قطع کامل ویدئو و صدا
+  */
 
   video.pause();
 
@@ -507,7 +561,9 @@ function enterSite() {
   video.volume = 0;
 
 
-  /* محو شدن Intro */
+  /*
+     محو شدن Intro
+  */
 
   intro.style.transition =
     "opacity 0.8s ease";
@@ -536,6 +592,28 @@ tapArea.addEventListener(
   "click",
   function() {
 
+    /*
+       اگر ویدئو متوقف است،
+       با لمس کاربر دوباره اجرا شود.
+    */
+
+    if (video.paused) {
+
+      video.muted = false;
+
+      video.volume = 1;
+
+      video.play().catch(function() {});
+
+      return;
+    }
+
+
+    /*
+       اگر ویدئو در حال پخش است،
+       وارد سایت شو.
+    */
+
     enterSite();
 
   }
@@ -543,7 +621,7 @@ tapArea.addEventListener(
 
 
 /* =========================
-   لمس موبایل
+   موبایل
 ========================= */
 
 tapArea.addEventListener(
@@ -551,6 +629,20 @@ tapArea.addEventListener(
   function(event) {
 
     event.preventDefault();
+
+
+    if (video.paused) {
+
+      video.muted = false;
+
+      video.volume = 1;
+
+      video.play().catch(function() {});
+
+      return;
+
+    }
+
 
     enterSite();
 
@@ -562,22 +654,17 @@ tapArea.addEventListener(
 
 
 /* =========================
-   پخش Intro
+   شروع اولیه
 ========================= */
 
-video.muted = false;
+window.addEventListener(
+  "load",
+  function() {
 
-video.volume = 1;
+    startVideo();
 
-video.play().catch(function() {
-
-  /*
-     اگر مرورگر autoplay با صدا را
-     محدود کند، با تعامل کاربر
-     امکان پخش فراهم می‌شود.
-  */
-
-});
+  }
+);
 
 </script>
 
